@@ -1,0 +1,218 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class symbol_info
+{
+private:
+    string name;
+    string type;
+    string data_type;
+    symbol_info *next;
+
+
+
+    int array_size; // for arrays
+    vector<pair<string, string>> parameters;
+
+
+
+    int type_id;
+    bool assign_op;
+    // Write necessary attributes to store what type of symbol it is (variable/array/function)
+    // Write necessary attributes to store the type/return type of the symbol (int/float/void/...)
+    // Write necessary attributes to store the parameters of a function
+    // Write necessary attributes to store the array size if the symbol is an array
+
+public:
+    symbol_info(string name, string type)
+    {
+        this->name = name;
+        this->type = type;
+        this->next = NULL;
+        this->type_id = 0; // 0 if var
+        this->array_size = 0;
+    }
+
+
+    symbol_info(string name, string type, string data_type){
+        this->name = name;
+        this->type = type;
+        this->data_type = data_type;
+        this->next = NULL;
+        this->type_id = 0; // 0 if vari
+        this->array_size = 0;
+    }
+
+    //for arr
+    symbol_info(string name, string type, int array_size){
+        this->name = name;
+        this->type = type;
+        this->data_type = data_type;
+        this->array_size = array_size;
+        this->next = NULL;
+        this->type_id = 1; // 1 if arr
+    }
+    //for func
+    symbol_info(string name, string type, string return_type, vector<pair<string, string>> parameters){
+        this->name = name;
+        this->type = type;
+        this->data_type = return_type;
+        this->parameters = parameters;
+        this->next = NULL;
+        this->type_id = 2; // 2 if func
+        this->array_size = 0;
+    }
+
+
+    string getname()
+    {
+        return name;
+    }
+    string get_type()
+    {
+        return type;
+    }
+
+    symbol_info *get_next()
+    {
+        return next;
+    }
+
+
+    int get_array_size()
+    {
+        return array_size;
+    }
+
+
+
+    vector<pair<string, string>> get_parameters()
+    {
+        return parameters;
+    }
+
+
+
+    int get_type_id()
+    {
+        return type_id;
+    }
+
+
+
+    bool get_is_array(){
+        if(type_id == 1){
+            return true;
+        }
+        return false;
+    }
+
+
+
+    bool get_is_function()
+    {
+        if(type_id == 2){
+            return true;
+        }
+        return false;
+    }
+
+
+
+    string get_return_type(){
+        return data_type; 
+    }
+
+    bool get_assign_op(){
+        return assign_op;
+    }
+
+    bool get_undefined(){
+        if(type_id == -1){
+            return true;
+        }
+        return false;
+    }
+
+
+
+    string get_data_type(){
+        return data_type;
+    }
+
+
+
+    void set_name(string name)
+    {
+        this->name = name;
+    }
+    void set_type(string type)
+    {
+        this->type = type;
+    }
+    // Write necessary functions to set and get the attributes
+
+
+    void set_data_type(string data_type){
+        this->data_type = data_type;
+    }
+
+    void set_is_array(bool is_array){
+        if(is_array){
+            this->type_id = 1; // 1 for array
+        }
+        else{
+            this->type_id = -1; // -1 for undefined
+        }
+    }
+
+
+
+    void set_next(symbol_info *next)
+    {
+        this->next = next;
+    }
+
+
+
+    void set_array_size(int array_size)
+    {
+        this->array_size = array_size;
+        this->type_id = 1; // 1 for array
+    }
+
+
+
+    void set_as_function(string return_type, vector<pair<string, string>> parameters){
+        this->data_type = return_type;
+        this->parameters = parameters;
+        this->type_id = 2; // 2 for function
+    }
+
+    void set_assign_op(bool assign_op){
+        this->assign_op = assign_op;
+    }
+
+    void set_as_function(){ //overloaded function for undefined function
+        this->type_id = -1; // -1 for undefined
+
+    }
+
+    void set_undefined(bool undefined){
+        if(undefined){
+            set_as_function();
+        }
+    }
+
+
+
+
+    ~symbol_info()
+    {
+        // Write necessary code to deallocate memory, if necessary
+        if(next != NULL) 
+        {
+            delete next;
+        }
+    }
+};
