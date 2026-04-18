@@ -136,7 +136,7 @@ func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statem
 				vector<pair<string, string> > params;
 				params = function_parameter_current;
 				symbol_info* func = new symbol_info($2->getname(), $1->getname());
-				func->set_as_function($1->getname(), params);
+				func->set_as_function($1->getname(), params);		//set_as_function(return_type, params)
 				table->insert(func);
 				string current_function_name = $2->getname();
 				if(!function_parameters.empty()){
